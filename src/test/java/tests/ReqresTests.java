@@ -130,6 +130,7 @@ public class ReqresTests extends TestBase{
                 .extract().as((Type) UpdateUserResponseLombokModel.class);
         assertEquals("morpheus", response.getName());
         assertEquals("mentor", response.getJob());
+
     }
 
 }
