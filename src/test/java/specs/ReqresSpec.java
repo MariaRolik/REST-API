@@ -10,17 +10,17 @@ import static io.restassured.filter.log.LogDetail.BODY;
 import static io.restassured.filter.log.LogDetail.STATUS;
 import static io.restassured.http.ContentType.JSON;
 
-public class LoginSpec {
-    public static RequestSpecification loginRequestSpec = with()
+public class ReqresSpec {
+
+    public static RequestSpecification userRequestSpec = with()
             .filter(withCustomTemplates())
             .log().uri()
             .log().body()
             .log().headers()
-            .contentType(JSON)
-            .basePath("/api/login");
+            .contentType(JSON);
 
-    public static ResponseSpecification loginResponseSpec = new ResponseSpecBuilder()
-            .expectStatusCode(200)
+
+    public static ResponseSpecification userResponseSpec = new ResponseSpecBuilder()
             .log(STATUS)
             .log(BODY)
             .build();

@@ -3,36 +3,40 @@ package tests;
 import models.lombok.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import java.lang.reflect.Type;
+
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static specs.LoginSpec.loginRequestSpec;
-import static specs.LoginSpec.loginResponseSpec;
-import static specs.UserSpec.*;
+import static org.junit.jupiter.api.Assertions.assertAll;
+
+import static specs.ReqresSpec.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class ReqresTests extends TestBase{
+public class ReqresTests extends TestBase {
 
     @Test
+    @DisplayName("Успешная авторизация пользователя (проверка длины токена)")
     void successfulLoginWithSpecsTest() {
         LoginBodyLombokModel authData = new LoginBodyLombokModel();
         authData.setEmail("eve.holt@reqres.in");
         authData.setPassword("cityslicka");
 
-        LoginResponseLombokModel response = step("Make request", ()->
-                given(loginRequestSpec)
+        LoginResponseLombokModel response = step("Make request", () ->
+                given(userRequestSpec)
                         .body(authData)
 
                         .when()
-                        .post()
+                        .post("/login")
 
                         .then()
-                        .spec(loginResponseSpec)
+                        .spec(userResponseSpec)
+                        .statusCode(200)
                         .extract().as(LoginResponseLombokModel.class));
 
-                step("Check response", ()->
-                assertEquals("QpwL5tke4Pnpja7X4", response.getToken()));
+        step("Check response", () ->
+                assertThat(response.getToken()).hasSize(17));
     }
 
     @Test
@@ -46,13 +50,21 @@ public class ReqresTests extends TestBase{
                 .body(authData)
 
                 .when()
-                .post()
+                .post("/users")
 
                 .then()
                 .spec(userResponseSpec)
+                .statusCode(201)
                 .extract().as((Type) CreateUserResponseLombokModel.class);
-                 assertEquals("morpheus", response.getName());
-                 assertEquals("leader", response.getJob());
+
+        step("Check response", () ->
+                assertAll("Check response values",
+                        () -> {
+                            assertThat(response.getName()).isEqualTo("morpheus");
+                            assertThat(response.getJob()).isEqualTo("leader");
+                        }
+                )
+        );
     }
 
 
@@ -65,11 +77,22 @@ public class ReqresTests extends TestBase{
                 .body(authData)
 
                 .when()
-                .post()
+                .post("/users")
 
                 .then()
-                .spec(userBadResponseSpec)
+                .spec(userResponseSpec)
+                .statusCode(201)
                 .extract().as((Type) CreateUserResponseLombokModel.class);
+
+        step("Check response", () ->
+                assertAll("Check response values",
+                        () -> {
+                            assertThat(response.getName()).isNull();
+                            assertThat(response.getJob()).isNull();
+                        }
+                )
+        );
+
     }
 
     @Test
@@ -79,17 +102,25 @@ public class ReqresTests extends TestBase{
         authData.setName("morpheus");
         authData.setJob("captain");
 
-        UpdateUserResponseLombokModel response = given(userUpdateRequestSpec)
+        UpdateUserResponseLombokModel response = given(userRequestSpec)
                 .body(authData)
 
                 .when()
-                .put()
+                .put("/users/2")
 
                 .then()
-                .spec(userUpdateResponseSpec)
+                .spec(userResponseSpec)
+                .statusCode(200)
                 .extract().as((Type) UpdateUserResponseLombokModel.class);
-        assertEquals("morpheus", response.getName());
-        assertEquals("captain", response.getJob());
+
+        step("Check response", () ->
+                assertAll("Check response values",
+                        () -> {
+                            assertThat(response.getName()).isEqualTo("morpheus");
+                            assertThat(response.getJob()).isEqualTo("captain");
+                        }
+                )
+        );
     }
 
     @Test
@@ -99,38 +130,24 @@ public class ReqresTests extends TestBase{
         authData.setName("morpheus");
         authData.setJob("mentor");
 
-        UpdateUserResponseLombokModel response = given(userUpdateRequestSpec)
+        UpdateUserResponseLombokModel response = given(userRequestSpec)
                 .body(authData)
 
                 .when()
-                .patch()
+                .patch("/users/2")
 
                 .then()
-                .spec(userUpdateResponseSpec)
+                .spec(userResponseSpec)
+                .statusCode(200)
                 .extract().as((Type) UpdateUserResponseLombokModel.class);
-                assertEquals("morpheus", response.getName());
-                assertEquals("mentor", response.getJob());
+
+        step("Check response", () ->
+                assertAll("Check response values",
+                        () -> {
+                            assertThat(response.getName()).isEqualTo("morpheus");
+                            assertThat(response.getJob()).isEqualTo("mentor");
+                        }
+                )
+        );
     }
-
-
-    @Test
-    @DisplayName("Ээээксперимент")
-    void testTest() {
-        UpdateUserBodyLombokModel authData = new UpdateUserBodyLombokModel();
-        authData.setJob("mentor");
-
-        UpdateUserResponseLombokModel response = given(userUpdateRequestSpec)
-                .body(authData)
-
-                .when()
-                .patch()
-
-                .then()
-                .spec(userUpdateResponseSpec)
-                .extract().as((Type) UpdateUserResponseLombokModel.class);
-        assertEquals("morpheus", response.getName());
-        assertEquals("mentor", response.getJob());
-
-    }
-
 }
