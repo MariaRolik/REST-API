@@ -20,4 +20,5 @@ public interface WebDriverConfig extends Config {
     @Key("page.load.strategy")
     @DefaultValue("eager")
     String pageLoadStrategy();
+
 }
