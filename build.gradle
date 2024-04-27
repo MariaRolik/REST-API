@@ -4,8 +4,22 @@ plugins {
     id "io.freefair.lombok" version "6.0.0-m2"
 }
 
-group = 'guru.qa'
+group = 'me.mrolik'
 version = '1.0'
+
+allure {
+    report {
+        version.set("2.25.0")
+    }
+    adapter { // отвечает за появление папочки build/allure-results
+        aspectjWeaver.set(true) //обработка аннотации @Step
+        frameworks {
+            junit5 { //название фреймворка
+                adapterVersion.set("2.25.0") //версия интеграции фреймворка и Allure
+            }
+        }
+    }
+}
 
 repositories {
     mavenCentral()
@@ -18,18 +32,23 @@ dependencies {
             'io.qameta.allure:allure-rest-assured:2.21.0',
             'org.junit.jupiter:junit-jupiter:5.10.1',
             'org.slf4j:slf4j-simple:2.0.7',
-            'org.assertj:assertj-core:3.11.1'
+            'org.assertj:assertj-core:3.11.1',
+            'org.junit:junit-bom:5.10.1',
+            "org.aeonbits.owner:owner:1.0.12"
     )
 }
 
-
-
-
+compileJava {
+    options.encoding = 'UTF-8'
+}
+compileTestJava {
+    options.encoding = 'UTF-8'
+}
 
 tasks.withType(Test) {
     useJUnitPlatform()
     systemProperties(System.getProperties())
-
+    systemProperty "file.encoding", "UTF-8"
     testLogging {
         lifecycle {
             events "started", "skipped", "failed", "standard_error", "standard_out"
