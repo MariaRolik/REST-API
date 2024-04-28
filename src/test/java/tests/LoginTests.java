@@ -11,7 +11,7 @@ import static io.restassured.RestAssured.given;
 import static specs.ReqresSpec.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LoginTests extends TestBase{
+public class LoginTests extends TestBase {
     @Test
     @DisplayName("Успешная авторизация пользователя (проверка длины токена)")
     void successfulLoginTest() {

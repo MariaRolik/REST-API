@@ -156,7 +156,7 @@ public class UsersTests extends TestBase {
                             assertThat(response.getUser().getFirstName()).isEqualTo("George");
                             assertThat(response.getUser().getLastName()).isEqualTo("Bluth");
                             assertThat(response.getUser().getAvatar()).isEqualTo("https://reqres.in/img/faces/1-image.jpg");
-                       }
+                        }
                 )
         );
 
@@ -166,11 +166,11 @@ public class UsersTests extends TestBase {
     @Test
     @DisplayName("Успешое удаление пользователя")
     void successfulDeleteUserTest() {
-            step("Send user delete request", () -> given(userRequestSpec)
-                    .when()
-                    .delete("/users/2")
-                    .then()
-                    .spec(userResponseSpec))
-                    .statusCode(204);
-        }
+        step("Send user delete request", () -> given(userRequestSpec)
+                .when()
+                .delete("/users/2")
+                .then()
+                .spec(userResponseSpec))
+                .statusCode(204);
     }
+}
