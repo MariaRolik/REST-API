@@ -1,4 +1,4 @@
-## API-тесты с использованием REST ASSURED для сайта [Regres.in](https://reqres.in)
+## API-тесты с использованием REST ASSURED для сайта [Reqres.in](https://reqres.in)
 
 ## Содержание:
 - <a href="#technologies">Технологии и инструменты</a> 
