@@ -86,7 +86,7 @@ allure serve build/allure-results
 После завершения сборки специальный бот, созданный в <code>Telegram</code>, автоматически обрабатывает и отправляет сообщение с отчетом.
 
 <p align="center">
-<img title="Allure Overview Dashboard" src="assets/allure2.png" >
+<img title="Allure Overview Dashboard" src="assets/allureTelegram.png" >
 </p>
 
 
