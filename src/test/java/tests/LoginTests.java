@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.RestAssured.given;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static specs.ReqresSpec.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,6 +30,7 @@ public class LoginTests extends TestBase {
                         .then()
                         .spec(userResponseSpec)
                         .statusCode(200)
+                        .body(matchesJsonSchemaInClasspath("schemas/success-login-schema.json"))
                         .extract().as(LoginResponseLombokModel.class));
 
         step("Check response", () ->

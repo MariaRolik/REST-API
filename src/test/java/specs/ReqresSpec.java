@@ -19,10 +19,8 @@ public class ReqresSpec {
             .log().headers()
             .contentType(JSON);
 
-
     public static ResponseSpecification userResponseSpec = new ResponseSpecBuilder()
             .log(STATUS)
             .log(BODY)
             .build();
-
 }

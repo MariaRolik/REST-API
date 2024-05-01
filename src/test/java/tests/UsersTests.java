@@ -25,7 +25,7 @@ public class UsersTests extends TestBase {
         authData.setName("morpheus");
         authData.setJob("leader");
 
-        CreateUserResponseLombokModel response = given(userRequestSpec)
+        CreateUserResponseLombokModel responseBody = given(userRequestSpec)
                 .body(authData)
 
                 .when()
@@ -34,13 +34,14 @@ public class UsersTests extends TestBase {
                 .then()
                 .spec(userResponseSpec)
                 .statusCode(201)
+                .body(matchesJsonSchemaInClasspath("schemas/create-schema.json"))
                 .extract().as((Type) CreateUserResponseLombokModel.class);
 
         step("Check response", () ->
                 assertAll("Check response values",
                         () -> {
-                            assertThat(response.getName()).isEqualTo("morpheus");
-                            assertThat(response.getJob()).isEqualTo("leader");
+                            assertThat(responseBody.getName()).isEqualTo("morpheus");
+                            assertThat(responseBody.getJob()).isEqualTo("leader");
                         }
                 )
         );
@@ -52,7 +53,7 @@ public class UsersTests extends TestBase {
     void createEmptyUserTest() {
         UserBodyLombokModel authData = new UserBodyLombokModel();
 
-        CreateUserResponseLombokModel response = given(userRequestSpec)
+        CreateUserResponseLombokModel responseBody = given(userRequestSpec)
                 .body(authData)
 
                 .when()
@@ -61,13 +62,14 @@ public class UsersTests extends TestBase {
                 .then()
                 .spec(userResponseSpec)
                 .statusCode(201)
+                .body(matchesJsonSchemaInClasspath("schemas/create-schema.json"))
                 .extract().as((Type) CreateUserResponseLombokModel.class);
 
         step("Check response", () ->
                 assertAll("Check response values",
                         () -> {
-                            assertThat(response.getName()).isNull();
-                            assertThat(response.getJob()).isNull();
+                            assertThat(responseBody.getName()).isNull();
+                            assertThat(responseBody.getJob()).isNull();
                         }
                 )
         );
@@ -81,7 +83,7 @@ public class UsersTests extends TestBase {
         authData.setName("morpheus");
         authData.setJob("captain");
 
-        UpdateUserResponseLombokModel response = given(userRequestSpec)
+        UpdateUserResponseLombokModel responseBody = given(userRequestSpec)
                 .body(authData)
 
                 .when()
@@ -90,13 +92,14 @@ public class UsersTests extends TestBase {
                 .then()
                 .spec(userResponseSpec)
                 .statusCode(200)
+                .body(matchesJsonSchemaInClasspath("schemas/edit-user-schema.json"))
                 .extract().as((Type) UpdateUserResponseLombokModel.class);
 
         step("Check response", () ->
                 assertAll("Check response values",
                         () -> {
-                            assertThat(response.getName()).isEqualTo("morpheus");
-                            assertThat(response.getJob()).isEqualTo("captain");
+                            assertThat(responseBody.getName()).isEqualTo("morpheus");
+                            assertThat(responseBody.getJob()).isEqualTo("captain");
                         }
                 )
         );
@@ -109,7 +112,7 @@ public class UsersTests extends TestBase {
         authData.setName("morpheus");
         authData.setJob("mentor");
 
-        UpdateUserResponseLombokModel response = given(userRequestSpec)
+        UpdateUserResponseLombokModel responseBody = given(userRequestSpec)
                 .body(authData)
 
                 .when()
@@ -118,13 +121,14 @@ public class UsersTests extends TestBase {
                 .then()
                 .spec(userResponseSpec)
                 .statusCode(200)
+                .body(matchesJsonSchemaInClasspath("schemas/edit-user-schema.json"))
                 .extract().as((Type) UpdateUserResponseLombokModel.class);
 
         step("Check response", () ->
                 assertAll("Check response values",
                         () -> {
-                            assertThat(response.getName()).isEqualTo("morpheus");
-                            assertThat(response.getJob()).isEqualTo("mentor");
+                            assertThat(responseBody.getName()).isEqualTo("morpheus");
+                            assertThat(responseBody.getJob()).isEqualTo("mentor");
                         }
                 )
         );
@@ -136,7 +140,7 @@ public class UsersTests extends TestBase {
     void singleUserId1Test() {
         UserBodyLombokModel authData = new UserBodyLombokModel();
 
-        UserDataResponseModel response = given(userRequestSpec)
+        UserDataResponseModel responseBody = given(userRequestSpec)
                 .body(authData)
 
                 .when()
@@ -151,11 +155,11 @@ public class UsersTests extends TestBase {
         step("Check response", () ->
                 assertAll("Check response values",
                         () -> {
-                            assertThat(response.getUser().getId()).isEqualTo(1);
-                            assertThat(response.getUser().getEmail()).isEqualTo("george.bluth@reqres.in");
-                            assertThat(response.getUser().getFirstName()).isEqualTo("George");
-                            assertThat(response.getUser().getLastName()).isEqualTo("Bluth");
-                            assertThat(response.getUser().getAvatar()).isEqualTo("https://reqres.in/img/faces/1-image.jpg");
+                            assertThat(responseBody.getUser().getId()).isEqualTo(1);
+                            assertThat(responseBody.getUser().getEmail()).isEqualTo("george.bluth@reqres.in");
+                            assertThat(responseBody.getUser().getFirstName()).isEqualTo("George");
+                            assertThat(responseBody.getUser().getLastName()).isEqualTo("Bluth");
+                            assertThat(responseBody.getUser().getAvatar()).isEqualTo("https://reqres.in/img/faces/1-image.jpg");
                         }
                 )
         );
