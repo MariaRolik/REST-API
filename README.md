@@ -59,7 +59,7 @@ clean test
 <p align="center">
 <img title="Allure Overview Dashboard" src="assets/jenkins.png" >
 </p>
-Последний успешный запуск: https://jenkins.autotests.cloud/job/Api_tests_diploma/15/
+Последний успешный запуск: https://jenkins.autotests.cloud/job/Api_tests_diploma/24/
 
 <a id="allure"></a>
 ## Allure-отчет 
@@ -79,7 +79,7 @@ allure serve build/allure-results
 <p align="center">
 <img title="Allure Overview Dashboard" src="assets/allure3.png" >
 </p>
-Последний успешный отчет: https://jenkins.autotests.cloud/job/Api_tests_diploma/15/allure/
+Последний успешный отчет: https://jenkins.autotests.cloud/job/Api_tests_diploma/24/allure/
 
 <a id="telegram"></a>
 ## Уведомления в Telegram
