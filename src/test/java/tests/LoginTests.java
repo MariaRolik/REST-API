@@ -36,5 +36,4 @@ public class LoginTests extends TestBase {
         step("Check response", () ->
                 assertThat(response.getToken()).hasSize(17));
     }
-
 }
